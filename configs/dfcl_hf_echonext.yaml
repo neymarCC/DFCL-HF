@@ -1,0 +1,60 @@
+# EchoNext E0-E6. Optimizer values match the original EchoNext training YAML.
+# PSR: frozen Stage-0 Initial Model, sum of (1 - cosine), all named parameters.
+
+seed: 42
+device: cuda
+
+manifest_root: data/echonext_manifests
+output_root: outputs/echonext
+n_stages: 7
+
+batch_size: 32
+num_workers: 0
+target_length: 2000
+normalize: true
+
+epochs_stage0: 50
+epochs_updated_teacher: 50
+epochs_student: 50
+
+learning_rate_stage0: 0.0002
+learning_rate_teacher: 0.0002
+learning_rate_student: 0.0002
+weight_decay: 0.0
+
+optimizer: Adam
+scheduler: ReduceLROnPlateau
+scheduler_factor: 0.5
+scheduler_patience: 2
+
+early_stopping_patience: 5
+gradient_clip: 5.0
+use_amp: true
+
+focal_alpha: auto
+focal_gamma: 2.0
+focal_eps: 1.0e-8
+
+temperature_tau: 2.0
+confidence_threshold_delta: 0.3
+lambda_m: 0.5
+lambda_u: 0.5
+beta: 1.0
+eta: 1.5
+distill_eps: 1.0e-8
+
+psr_reference: stage0_initial_model
+psr_reduction: sum
+psr_layers: all
+psr_include_bias: true
+psr_eps: 1.0e-8
+
+lstm_hidden: 128
+attention_heads: 4
+dropout: 0.5
+num_classes: 2
+
+debug_gradient_check: true
+load_mimic_weights: false
+future_test_manifest: data/echonext_manifests/future_2022_test.csv
+algorithm_version: dfcl_hf
